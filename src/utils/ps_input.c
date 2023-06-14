@@ -22,7 +22,7 @@ int	argctl(char *str, int *nbr)
 	while (str[++i])
 		if (!((str[i] >= '0' && str[i] <= '9') || str[i] == '-'))
 			return (0);
-	ret = ft_atol(str);
+	ret = ft_atol_no_ws(str);
 	if (ret < INT_MIN || ret > INT_MAX)
 		return (0);
 	*nbr = ret;
