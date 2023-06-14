@@ -11,16 +11,21 @@
 /* ************************************************************************** */
 
 #include "../../include/push_swap.h"
+#include <stdio.h>
 
-int	ps_atoi(char *str, int *nbr)
+int	argctl(char *str, int *nbr)
 {
 	int		i;
+	long	ret;
 
 	i = -1;
 	while (str[++i])
-		if (!(str[i] >= '0' && str[i] <= '9'))
+		if (!((str[i] >= '0' && str[i] <= '9') || str[i] == '-'))
 			return (0);
-	*nbr = ft_atoi(str);
+	ret = ft_atol(str);
+	if (ret < INT_MIN || ret > INT_MAX)
+		return (0);
+	*nbr = ret;
 	return (1);
 }
 
@@ -37,7 +42,7 @@ t_stack	*ps_input(char *argv[], int argc)
 	ft_stack_init(st, --argc, sizeof(int));
 	while (argc)
 	{
-		if (!ps_atoi(argv[argc--], &nbr))
+		if (!argctl(argv[argc--], &nbr))
 			handle_error(INV_ARG, &st);
 		i = 0;
 		pt = (int *)st->data;

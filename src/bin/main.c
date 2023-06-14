@@ -11,12 +11,30 @@
 /* ************************************************************************** */
 
 #include "../../include/push_swap.h"
+#include <stdio.h>
+
+int	ps_sort(t_stack *stack_a)
+{
+	t_uint	i;
+
+	i = 0;
+	while (i < stack_a->size - 1)
+		if (((int *)stack_a->data)[i] > ((int *)stack_a->data)[i + 1])
+			i++;
+		else
+			break ;
+	if (i >= stack_a->size - 1)
+		return (0);
+	return (1);
+}
 
 int	main(int argc, char *argv[])
 {
 	t_stack	*stack_a;
 
 	stack_a = ps_input(argv, argc);
+	if (!ps_sort(stack_a))
+		return (0);
 	ft_putmem_fd(1, stack_a->data, (argc - 1) * 4, "\n");
 	ft_stack_destroy(&stack_a);
 }
