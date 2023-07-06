@@ -9,8 +9,8 @@ LIBFT_DIR		= ./src/libft
 LIBFT_HEADERS	= $(LIBFT_DIR)/include
 LIBFT			= $(LIBFT_DIR)/libft.a
 
-SRC			= $(filter-out ./src/bin/main.c, $(wildcard ./src/*/*.c)) ./src/bin/main.c
-SRC_BONUS	= $(wildcard ./src/bonus/*.c)
+SRC			= $(wildcard ./src/mandatory/*.c)
+SRC_BONUS	= $(wildcard ./src/checker/*.c)
 
 $(NAME): $(SRC)
 	@printf "$(TITLE) \033[1mMandatory\033[m\n"

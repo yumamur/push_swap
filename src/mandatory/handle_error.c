@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com.t  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:22:29 by yumamur           #+#    #+#             */
-/*   Updated: 2023/06/13 17:22:36 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/07/07 01:54:41 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	handle_error(int err, t_stack **st)
 {
-	ft_stack_destroy(st);
 	if (err == NO_ARG)
-		exit(EXIT_FAILURE);
-	if (err == DUP_ARG)
-		exit(127);
+		write(2, "No argument is provided.", 24);
+	ft_stack_destroy(st);
+	if (err == INV_ARG)
+		write(2, "Invalid argument.", 17);
+	else if (err == DUP_ARG)
+		write(2, "Two or more arguments have equal values.", 40);
 	exit(0);
 }

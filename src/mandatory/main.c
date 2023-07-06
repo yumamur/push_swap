@@ -6,12 +6,11 @@
 /*   By: yumamur <yumamur@student.42istanbul.com.t  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:45:54 by yumamur           #+#    #+#             */
-/*   Updated: 2023/06/13 18:45:55 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/07/06 23:05:20 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/push_swap.h"
-#include <stdio.h>
 
 int	ps_sort(t_stack *stack_a)
 {
@@ -24,17 +23,17 @@ int	ps_sort(t_stack *stack_a)
 	else
 		break ;
 	if (i >= stack_a->size - 1)
-		return (0);
-	return (1);
+		return (-1);
+	return (0);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_stack	*stack_a;
 
-	stack_a = ps_input(argv, argc);
-	if (!ps_sort(stack_a))
-		return (0);
+	stack_a = ps_input(&argv[1], argc - 1);
+	if (ps_sort(stack_a))
+		(handle_error(SORTED, &stack_a));
 	ft_putmem_fd(1, stack_a->data, (argc - 1) * 4, "\n");
 	ft_stack_destroy(&stack_a);
 }
