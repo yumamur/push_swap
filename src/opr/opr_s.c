@@ -6,6 +6,10 @@
 /*   By: yumamur <yumamur@student.42istanbul.com.t  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:47:00 by yumamur           #+#    #+#             */
-/*   Updated: 2023/06/13 18:47:34 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/07/06 13:17:44 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../include/push_swap.h"
+
+int	opr_s()
