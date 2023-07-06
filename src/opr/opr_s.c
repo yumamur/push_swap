@@ -9,3 +9,12 @@
 /*   Updated: 2023/06/13 18:47:34 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../include/push_swap.h"
+
+int	opr_s(t_stack *stack)
+{
+	if (ft_stack_swap(stack, 0, 1))
+		return (-1);
+	return (0);
+}

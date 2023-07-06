@@ -13,16 +13,9 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# ifndef PS_ERRORS
-#  define PS_ERRORS
-
-#  define NO_ARG 1
-#  define DUP_ARG 2
-#  define INV_ARG 3
-# endif /* PS_ERRORS */
-
 # include "libft/stackft.h"
 # include "libft/libft.h"
+# include "ps_errno.h"
 
 # ifndef INT_MIN
 #  define INT_MIN -2147483648
@@ -32,6 +25,9 @@
 #  define INT_MAX 2147483647
 # endif
 
+typedef int	(*t_opr_s_ptr)(t_stack *mem);
+
+int		opr_s(t_stack *stack);
 void	handle_error(int errno, t_stack **stack);
 t_stack	*ps_input(char *argv[], int argc);
 #endif /* PS_ERRORS */
