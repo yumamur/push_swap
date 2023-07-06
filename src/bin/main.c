@@ -21,8 +21,8 @@ int	ps_sort(t_stack *stack_a)
 	while (i < stack_a->size - 1)
 		if (((int *)stack_a->data)[i] > ((int *)stack_a->data)[i + 1])
 			i++;
-		else
-			break ;
+	else
+		break ;
 	if (i >= stack_a->size - 1)
 		return (0);
 	return (1);

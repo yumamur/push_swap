@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com.t  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:21:53 by yumamur           #+#    #+#             */
-/*   Updated: 2023/06/13 16:21:56 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/07/06 13:32:18 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # include "libft/stackft.h"
 # include "libft/libft.h"
+# include "operation_modes.h"
 
 # ifndef INT_MIN
 #  define INT_MIN -2147483648
