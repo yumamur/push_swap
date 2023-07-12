@@ -35,7 +35,7 @@ static int	atol_no_ws(t_c_char *str, long *ptr)
 	return (0);
 }
 
-int	argctl(char *str, int *nbr)
+static int	argctl(char *str, int *nbr)
 {
 	long	ret;
 
@@ -47,27 +47,43 @@ int	argctl(char *str, int *nbr)
 	return (0);
 }
 
-t_stack	*ps_input(char *argv[], int argc)
+static void	load_init(t_load *load, int size)
 {
-	t_stack	*st;
+	if (!load || !size)
+		handle_error(NO_ARG, NULL);
+	load->a = malloc(sizeof(t_stack) * 2);
+	if (!load->a)
+		handle_error(MEM_ERROR, NULL);
+	load->b = &load->a[1];
+	if (ft_stack_init(load->a, size, sizeof(int)))
+		handle_error(MEM_ERROR, NULL);
+	if (ft_stack_init(load->b, size, sizeof(int)))
+	{
+		ft_stack_destroy(&load->a);
+		handle_error(MEM_ERROR, NULL);
+	}
+}
+
+t_load	ps_input(char *argv[], int argc)
+{
+	t_load	load;
 	int		nbr;
 	t_uint	i;
 	int		*pt;
 
 	if (!argc || !argv)
 		handle_error(NO_ARG, NULL);
-	st = malloc(sizeof(t_stack));
-	ft_stack_init(st, argc, sizeof(int));
+	load_init(&load, argc);
 	while (argc)
 	{
 		if (argctl(argv[--argc], &nbr))
-			handle_error(INV_ARG, &st);
+			handle_error(INV_ARG, &load);
 		i = 0;
-		pt = (int *)st->data;
-		while (i < st->size)
+		pt = (int *)load.a->u_data.i;
+		while (i < load.a->size)
 			if (nbr == pt[i++])
-				handle_error(DUP_ARG, &st);
-		ft_stack_push(st, &nbr);
+				handle_error(DUP_ARG, &load);
+		ft_stack_push(load.a, &nbr);
 	}
-	return (st);
+	return (load);
 }

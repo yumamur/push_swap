@@ -12,22 +12,55 @@
 
 #include "../../include/push_swap.h"
 
-int	ps_opr(t_stack st[], int mode)
+static int	wr(int opr)
 {
-	if ((mode == PS_SA && !ft_stack_swap(&st[0], 0, 1))
-		|| (mode == PS_SB && !ft_stack_swap(&st[1], 0, 1))
-		|| (mode == PS_SS && !ft_stack_swap(&st[0], 0, 1)
-			&& !ft_stack_swap(&st[1], 0, 1))
-		|| (mode == PS_PA && !ft_stack_push(&st[0], ft_stack_pop(&st[1]).buf))
-		|| (mode == PS_PB && !ft_stack_push(&st[1], ft_stack_pop(&st[0]).buf))
-		|| (mode == PS_RA && !ft_stack_shift_nup(&st[0], 1))
-		|| (mode == PS_RB && !ft_stack_shift_nup(&st[1], 1))
-		|| (mode == PS_RR && !ft_stack_shift_nup(&st[0], 1)
-			&& !ft_stack_shift_nup(&st[1], 1))
-		|| (mode == PS_RRA && !ft_stack_shift_ndown(&st[0], 1))
-		|| (mode == PS_RRB && !ft_stack_shift_ndown(&st[1], 1))
-		|| (mode == PS_RRR && !ft_stack_shift_ndown(&st[0], 1)
-			&& !ft_stack_shift_ndown(&st[1], 1)))
-		return (0);
-	return (-1);
+	if (opr == 0)
+		return (0xFF && write(1, "ra\n", 3));
+	else if (opr == 1)
+		return (0xFF && write(1, "rb\n", 3));
+	else if (opr == 2)
+		return (0xFF && write(1, "rr\n", 3));
+	else if (opr == 3)
+		return (0xFF && write(1, "rra\n", 4));
+	else if (opr == 4)
+		return (0xFF && write(1, "rrb\n", 4));
+	else if (opr == 5)
+		return (0xFF && write(1, "rrr\n", 4));
+	else if (opr == 6)
+		return (0xFF && write(1, "pa\n", 3));
+	else if (opr == 7)
+		return (0xFF && write(1, "pb\n", 3));
+	else if (opr == 8)
+		return (0xFF && write(1, "sa\n", 3));
+	else if (opr == 9)
+		return (0xFF && write(1, "sb\n", 3));
+	else if (opr == 10)
+		return (0xFF && write(1, "ss\n", 3));
+	return (0);
+}
+
+int	ps_opr(t_load *ld, int moves[])
+{
+	int	ct;
+
+	ct = 0;
+	while (ct++ < moves[0])
+		if ((moves[ct] == PS_RA && wr(0) && ft_stack_shift_ndown(ld->a, 1))
+			|| (moves[ct] == PS_RB && wr(1) && ft_stack_shift_ndown(ld->b, 1))
+			|| (moves[ct] == PS_RR && wr(2) && ft_stack_shift_ndown(ld->a, 1)
+				&& ft_stack_shift_nup(ld->b, 1))
+			|| (moves[ct] == PS_RRA && wr(3) && ft_stack_shift_nup(ld->a, 1))
+			|| (moves[ct] == PS_RRB && wr(4) && ft_stack_shift_nup(ld->b, 1))
+			|| (moves[ct] == PS_RRR && wr(5) && ft_stack_shift_nup(ld->a, 1)
+				&& ft_stack_shift_ndown(ld->b, 1))
+			|| (moves[ct] == PS_PA && wr(6)
+				&& ft_stack_push(ld->a, ft_stack_pop(ld->b).buf))
+			|| (moves[ct] == PS_PB && wr(7)
+				&& ft_stack_push(ld->b, ft_stack_pop(ld->a).buf))
+			|| (moves[ct] == PS_SA && wr(8) && ft_stack_swap(ld->a, 0, 1))
+			|| (moves[ct] == PS_SB && wr(9) && ft_stack_swap(ld->b, 0, 1))
+			|| (moves[ct] == PS_SS && wr(10) && ft_stack_swap(ld->a, 0, 1)
+				&& ft_stack_swap(ld->b, 0, 1)))
+			return (-1);
+	return (0);
 }

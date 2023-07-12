@@ -12,42 +12,76 @@
 
 #include "../../include/push_swap.h"
 
-int	sort_two(t_stack *stack_a)
+int	sort_two(t_load *load)
 {
-	if (stack_a->u_data.i[0] > stack_a->u_data.i[1])
-		ps_opr(stack_a, PS_SA);
+	if (load->a->u_data.i[0] < load->a->u_data.i[1])
+		ps_opr(load, (int []){1, PS_SA});
 	return (0);
 }
 
-int	sort_three(t_stack *stack_a)
+int	sort_three(t_load *load)
 {
 	t_uint	small;
 
-	small = smallest(stack_a->u_data.i);
-	if (small == 0)
-		return (ps_opr(stack_a, PS_RRA) || ps_opr(stack_a, PS_SA));
+	small = smallest(load->a);
+	if (small == 2)
+		return (ps_opr(load, (int []){2, PS_RRA, PS_SA}));
 	else if (small == 1)
 	{
-		if (stack_a->u_data.i[0] > stack_a->u_data.i[2])
-			return (ps_opr(stack_a, PS_RA));
+		if (load->a->u_data.i[0] < load->a->u_data.i[2])
+			return (ps_opr(load, (int []){1, PS_RA}));
 		else
-			return (ps_opr(stack_a, PS_SA));
+			return (ps_opr(load, (int []){1, PS_SA}));
 	}
-	else if (small == 2)
+	else if (small == 0)
 	{
-		if (stack_a->u_data.i[0] < stack_a->u_data.i[1])
-			return (ps_opr(stack_a, PS_RRA));
+		if (load->a->u_data.i[1] > load->a->u_data.i[2])
+			return (ps_opr(load, (int []){1, PS_RRA}));
 		else
-			return (ps_opr(stack_a, PS_RA) || ps_opr(stack_a, PS_SA));
+			return (ps_opr(load, (int []){2, PS_RA, PS_SA}));
 	}
 	return (-1);
 }
 
-int	sort_four(t_stack stack[])
+int	sort_four(t_load *load)
 {
 	t_uint	small;
 
-	smalll = smallest(stack_a->u_data.i);
-	if (small == 0)
-		return (ps_opr(stack, ))
+	small = smallest(load->a);
+	if (small == 3)
+		return (ps_opr(load, (int []){1, PS_PB}) || sort_three(load)
+			|| ps_opr(load, (int []){1, PS_PA}));
+	else if (small == 2)
+		return (ps_opr(load, (int []){2, PS_RA, PS_PB}) || sort_three(load)
+			|| ps_opr(load, (int []){1, PS_PA}));
+	else if (small == 1)
+		return (ps_opr(load, (int []){3, PS_RA, PS_RA, PS_PB})
+			|| sort_three(load) || ps_opr(load, (int []){1, PS_PB}));
+	else if (small == 0)
+		return (ps_opr(load, (int []){2, PS_RRA, PS_PB}) || sort_three(load)
+			|| ps_opr(load, (int []){1, PS_PA}));
+	return (-1);
+}
+
+int	sort_five(t_load *load)
+{
+	t_uint	small;
+
+	small = smallest(load->a);
+	if (small == 4)
+		return (ps_opr(load, (int []){1, PS_PB}) || sort_four(load)
+			|| ps_opr(load, (int []){1, PS_PA}));
+	else if (small == 3)
+		return (ps_opr(load, (int []){2, PS_RA, PS_PB}) || sort_four(load)
+			|| ps_opr(load, (int []){1, PS_PA}));
+	else if (small == 2)
+		return (ps_opr(load, (int []){3, PS_RA, PS_RA, PS_PB})
+			|| sort_four(load) || ps_opr(load, (int []){1, PS_PA}));
+	else if (small == 1)
+		return (ps_opr(load, (int []){3, PS_RRA, PS_RRA, PS_PB})
+			|| sort_four(load) || ps_opr(load, (int []){1, PS_PA}));
+	else if (small == 0)
+		return (ps_opr(load, (int []){2, PS_RRA, PS_PB}) || sort_four(load)
+			|| ps_opr(load, (int []){1, PS_PA}));
+	return (-1);
 }
