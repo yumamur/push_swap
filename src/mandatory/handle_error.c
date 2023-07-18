@@ -15,11 +15,12 @@
 void	handle_error(int err, t_load *load)
 {
 	if (err == MEM_ERROR)
-		write(2, "Malloc error.\n", 13);
+		exit(!!write(2, "Malloc error.\n", 13));
 	if (err == NO_ARG)
-		write(2, "No argument is provided.\n", 25);
-	ft_stack_destroy(&load->a);
-	ft_stack_destroy(&load->b);
+		exit(!!write(2, "No argument is provided.\n", 25));
+	free(load->b->u_data.v);
+	free(load->a->u_data.v);
+	free(load->a);
 	if (err == INV_ARG)
 		write(2, "Invalid argument.\n", 18);
 	else if (err == DUP_ARG)

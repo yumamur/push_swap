@@ -19,5 +19,6 @@
 # define INV_ARG 3
 # define SORTED 4
 # define INV_PTR 5
+# define OPR_ERROR 6
 
 #endif /* PS_ERRNO_H */

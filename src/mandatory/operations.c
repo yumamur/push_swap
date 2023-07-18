@@ -61,6 +61,6 @@ int	ps_opr(t_load *ld, int moves[])
 			|| (moves[ct] == PS_SB && wr(9) && ft_stack_swap(ld->b, 0, 1))
 			|| (moves[ct] == PS_SS && wr(10) && ft_stack_swap(ld->a, 0, 1)
 				&& ft_stack_swap(ld->b, 0, 1)))
-			return (-1);
+			handle_error(OPR_ERROR, ld);
 	return (0);
 }

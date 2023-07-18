@@ -56,7 +56,10 @@ static void	load_init(t_load *load, int size)
 		handle_error(MEM_ERROR, NULL);
 	load->b = &load->a[1];
 	if (ft_stack_init(load->a, size, sizeof(int)))
+	{
+		free(load->a);
 		handle_error(MEM_ERROR, NULL);
+	}
 	if (ft_stack_init(load->b, size, sizeof(int)))
 	{
 		ft_stack_destroy(&load->a);
@@ -64,26 +67,24 @@ static void	load_init(t_load *load, int size)
 	}
 }
 
-t_load	ps_input(char *argv[], int argc)
+void	ps_input(char *argv[], int argc, t_load *load)
 {
-	t_load	load;
 	int		nbr;
 	t_uint	i;
 	int		*pt;
 
-	if (!argc || !argv)
+	if (!argc || argc == 1 || !argv)
 		handle_error(NO_ARG, NULL);
-	load_init(&load, argc);
-	while (argc)
+	load_init(load, argc);
+	while (argc--)
 	{
-		if (argctl(argv[--argc], &nbr))
-			handle_error(INV_ARG, &load);
+		if (argctl(argv[argc], &nbr))
+			handle_error(INV_ARG, load);
 		i = 0;
-		pt = (int *)load.a->u_data.i;
-		while (i < load.a->size)
+		pt = (int *)load->a->u_data.i;
+		while (i < load->a->size)
 			if (nbr == pt[i++])
-				handle_error(DUP_ARG, &load);
-		ft_stack_push(load.a, &nbr);
+				handle_error(DUP_ARG, load);
+		ft_stack_push(load->a, &nbr);
 	}
-	return (load);
 }

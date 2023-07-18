@@ -12,18 +12,33 @@
 
 #include "../../include/push_swap.h"
 
+int	if_sorted(t_stack *stack)
+{
+	t_uint	i;
+
+	i = 0;
+	while (i < stack->size - 1)
+		if ((stack->u_data.i)[i] > (stack->u_data.i)[i + 1])
+			i++;
+	else
+		break ;
+	if (i != stack->size - 1)
+		return (-1);
+	return (0);
+}
+
 t_uint	smallest(t_stack *stack)
 {
 	t_uint	index;
 	t_uint	ret;
 
-	index = stack->size - 1;
-	ret = index - 1;
-	while (index + 1)
+	index = 0;
+	ret = 0;
+	while (index < stack->size)
 	{
 		if (stack->u_data.i[index] < stack->u_data.i[ret])
 			ret = index;
-		index--;
+		index++;
 	}
 	return (ret);
 }
@@ -33,13 +48,13 @@ t_uint	biggest(t_stack *stack)
 	t_uint	index;
 	t_uint	ret;
 
-	index = stack->size - 1;
-	ret = index - 1;
-	while (index + 1)
+	index = 0;
+	ret = 0;
+	while (index < stack->size)
 	{
 		if (stack->u_data.i[index] > stack->u_data.i[ret])
 			ret = index;
-		index--;
+		index++;
 	}
 	return (ret);
 }
