@@ -17,6 +17,8 @@ int	main(int argc, char *argv[])
 	t_load	load;
 
 	ps_input(&argv[1], argc - 1, &load);
+	if (if_sorted(load.a))
+		handle_error(SORTED, &load);
 	if (ps_sort(&load))
 		(handle_error(SORTED, &load));
 	if (if_sorted(load.a))

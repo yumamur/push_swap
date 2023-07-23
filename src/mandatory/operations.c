@@ -39,28 +39,27 @@ static int	wr(int opr)
 	return (0);
 }
 
-int	ps_opr(t_load *ld, int moves[])
+int	ps_opr(t_load *ld, int move)
 {
-	int	ct;
-
-	ct = 0;
-	while (ct++ < moves[0])
-		if ((moves[ct] == PS_RA && wr(0) && ft_stack_shift_ndown(ld->a, 1))
-			|| (moves[ct] == PS_RB && wr(1) && ft_stack_shift_ndown(ld->b, 1))
-			|| (moves[ct] == PS_RR && wr(2) && ft_stack_shift_ndown(ld->a, 1)
-				&& ft_stack_shift_nup(ld->b, 1))
-			|| (moves[ct] == PS_RRA && wr(3) && ft_stack_shift_nup(ld->a, 1))
-			|| (moves[ct] == PS_RRB && wr(4) && ft_stack_shift_nup(ld->b, 1))
-			|| (moves[ct] == PS_RRR && wr(5) && ft_stack_shift_nup(ld->a, 1)
-				&& ft_stack_shift_ndown(ld->b, 1))
-			|| (moves[ct] == PS_PA && wr(6)
-				&& ft_stack_push(ld->a, ft_stack_pop(ld->b).buf))
-			|| (moves[ct] == PS_PB && wr(7)
-				&& ft_stack_push(ld->b, ft_stack_pop(ld->a).buf))
-			|| (moves[ct] == PS_SA && wr(8) && ft_stack_swap(ld->a, 0, 1))
-			|| (moves[ct] == PS_SB && wr(9) && ft_stack_swap(ld->b, 0, 1))
-			|| (moves[ct] == PS_SS && wr(10) && ft_stack_swap(ld->a, 0, 1)
-				&& ft_stack_swap(ld->b, 0, 1)))
-			handle_error(OPR_ERROR, ld);
+	if ((move == PS_RA && wr(0) && ft_stack_shift_ndown(ld->a, 1))
+		|| (move == PS_RB && wr(1) && ft_stack_shift_ndown(ld->b, 1))
+		|| (move == PS_RR && wr(2) && (ft_stack_shift_ndown(ld->a, 1)
+			|| ft_stack_shift_ndown(ld->b, 1)))
+		|| (move == PS_RRA && wr(3) && ft_stack_shift_nup(ld->a, 1))
+		|| (move == PS_RRB && wr(4) && ft_stack_shift_nup(ld->b, 1))
+		|| (move == PS_RRR && wr(5) && (ft_stack_shift_nup(ld->a, 1)
+			|| ft_stack_shift_nup(ld->b, 1)))
+		|| (move == PS_PA && wr(6)
+			&& ft_stack_push(ld->a, ft_stack_pop(ld->b).buf))
+		|| (move == PS_PB && wr(7)
+			&& ft_stack_push(ld->b, ft_stack_pop(ld->a).buf))
+		|| (move == PS_SA && wr(8) 
+			&& ft_stack_swap(ld->a, ld->a->size - 2, ld->a->size - 1))
+		|| (move == PS_SB && wr(9)
+			&& ft_stack_swap(ld->b, ld->b->size - 2, ld->b->size - 1))
+		|| (move == PS_SS && wr(10)
+			&& (ft_stack_swap(ld->a, ld->a->size - 1, ld->a->size - 1)
+				|| ft_stack_swap(ld->b, ld->b->size - 2, ld->b->size - 1))))
+		handle_error(OPR_ERROR, ld);
 	return (0);
 }

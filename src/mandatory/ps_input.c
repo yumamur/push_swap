@@ -71,17 +71,17 @@ void	ps_input(char *argv[], int argc, t_load *load)
 {
 	int		nbr;
 	t_uint	i;
-	int		*pt;
+	t_c_int	*pt;
 
 	if (!argc || argc == 1 || !argv)
 		handle_error(NO_ARG, NULL);
 	load_init(load, argc);
+	pt = load->a->u_data.i;
 	while (argc--)
 	{
 		if (argctl(argv[argc], &nbr))
 			handle_error(INV_ARG, load);
 		i = 0;
-		pt = (int *)load->a->u_data.i;
 		while (i < load->a->size)
 			if (nbr == pt[i++])
 				handle_error(DUP_ARG, load);

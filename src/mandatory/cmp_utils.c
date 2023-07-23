@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com.t  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:41:21 by yumamur           #+#    #+#             */
-/*   Updated: 2023/07/11 18:41:22 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/07/20 18:42:53 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,29 @@ int	if_sorted(t_stack *stack)
 
 	i = 0;
 	while (i < stack->size - 1)
+	{
 		if ((stack->u_data.i)[i] > (stack->u_data.i)[i + 1])
 			i++;
-	else
-		break ;
-	if (i != stack->size - 1)
+		else
+			break ;
+	}
+	if (i == stack->size - 1)
 		return (-1);
 	return (0);
+}
+
+t_uint	find_index(t_stack *stack, int nbr)
+{
+	t_uint	ret;
+
+	ret = 0;
+	while (ret < stack->size)
+	{
+		if (stack->u_data.i[ret] == nbr)
+			return (ret);
+		++ret;
+	}
+	return (-1);
 }
 
 t_uint	smallest(t_stack *stack)

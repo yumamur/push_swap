@@ -13,6 +13,7 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+#include <stdio.h>
 # include "libft/stackft.h"
 # include "libft/libft.h"
 # include "operation_modes.h"
@@ -33,21 +34,31 @@ typedef struct s_load
 {
 	t_stack	*a;
 	t_stack	*b;
-	void	(*func)(int, struct s_load *);
-	t_c_int	*i;
+	t_stack	*cur;
+	t_c_int	*ptr;
+	t_uint	i;
 	t_uint	ctl;
 	int		nbr;
+	void	(*func)(int, struct s_load *);
 }	t_load;
 
 void	ps_input(char *argv[], int argc, t_load *load);
-int		ps_opr(t_load *load, int moves[]);
+int		ps_opr(t_load *load, int move);
 int		ps_sort(t_load *load);
-
-int		if_sorted(t_stack *stack);
 void	handle_error(int errno, t_load *load);
 
+int		if_sorted(t_stack *stack);
+t_uint	find_index(t_stack *stack, int nbr);
+t_uint	smallest(t_stack *stack);
+t_uint	biggest(t_stack *stack);
+
 int		sort_three(t_load *load);
+int		sort_four(t_load *load);
+int		sort_five(t_load *load);
 void	rotate(int mode, t_load *load);
+
+t_uint	find_place_a(t_stack *stack, t_c_int nbr);
+t_uint	find_place_b(t_stack *stack, t_c_int nbr);
 
 t_uint	calc_rarb(int mode, t_load *load);
 t_uint	calc_rrarrb(int mode, t_load *load);
@@ -59,9 +70,4 @@ void	apply_rrarrb(int mode, t_load *load);
 void	apply_rarrb(int mode, t_load *load);
 void	apply_rrarb(int mode, t_load *load);
 
-t_uint	find_place_a(t_stack *stack, t_c_int nbr);
-t_uint	find_place_b(t_stack *stack, t_c_int nbr);
-
-t_uint	smallest(t_stack *stack);
-t_uint	biggest(t_stack *stack);
 #endif /* PS_ERRORS */
