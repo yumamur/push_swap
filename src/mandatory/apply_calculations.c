@@ -12,94 +12,52 @@
 
 #include "../../include/push_swap.h"
 
-void	apply_rarb(int mode, t_load *load)
+void	apply_rarb(t_load *load)
 {
-	if (mode)
-	{
-		while (load->b->u_data.i[load->b->size - 1] != load->nbr
-			&& find_place_a(load->a, load->nbr))
-			ps_opr(load, PS_RR);
-		while (load->b->u_data.i[load->b->size - 1] != load->nbr)
-			ps_opr(load, PS_RB);
-		while (find_place_a(load->a, load->nbr))
-			ps_opr(load, PS_RA);
-	}
-	else
-	{
-		while (load->a->u_data.i[load->a->size - 1] != load->nbr
-			&& find_place_b(load->b, load->nbr))
-			ps_opr(load, PS_RR);
-		while (load->a->u_data.i[load->a->size - 1] != load->nbr)
-			ps_opr(load, PS_RA);
-		while (find_place_b(load->b, load->nbr))
-			ps_opr(load, PS_RB);
-	}
-	ps_opr(load, PS_PB + mode);
+	t_uint	place;
+
+	place = find_place_b(load->b, load->nbr);
+	while (load->a->u_data.i[load->a->size - 1] != load->nbr
+		&& place++ < load->b->size - 1)
+		ps_opr(load, PS_RR);
+	while (load->a->u_data.i[load->a->size - 1] != load->nbr)
+		ps_opr(load, PS_RA);
+	while (place++ < load->b->size - 1)
+		ps_opr(load, PS_RB);
+	ps_opr(load, PS_PB);
 	load->func = NULL;
 }
 
-void	apply_rrarb(int mode, t_load *load)
+void	apply_rrarb(t_load *load)
 {
-	if (mode)
-	{
-		while (load->b->u_data.i[load->b->size - 1] != load->nbr)
-			ps_opr(load, PS_RB);
-		while (find_place_a(load->a, load->nbr))
-			ps_opr(load, PS_RRA);
-	}
-	else
-	{
-		while (load->a->u_data.i[load->a->size - 1] != load->nbr)
-			ps_opr(load, PS_RRA);
-		while (find_place_b(load->b, load->nbr))
-			ps_opr(load, PS_RB);
-	}
-	ps_opr(load, PS_PB + mode);
+	t_uint	place;
+	while (load->a->u_data.i[load->a->size - 1] != load->nbr)
+		ps_opr(load, PS_RRA);
+	while (find_place_b(load->b, load->nbr))
+		ps_opr(load, PS_RB);
+	ps_opr(load, PS_PB);
 	load->func = NULL;
 }
 
-void	apply_rarrb(int mode, t_load *load)
+void	apply_rarrb(t_load *load)
 {
-	if (mode)
-	{
-		while (load->b->u_data.i[load->b->size - 1] != load->nbr)
-			ps_opr(load, PS_RRB);
-		while (find_place_a(load->a, load->nbr))
-			ps_opr(load, PS_RA);
-	}
-	else
-	{
-		while (load->a->u_data.i[load->a->size - 1] != load->nbr)
-			ps_opr(load, PS_RA);
-		while (find_place_b(load->b, load->nbr))
-			ps_opr(load, PS_RRB);
-	}
-	ps_opr(load, PS_PB + mode);
+	while (load->a->u_data.i[load->a->size - 1] != load->nbr)
+		ps_opr(load, PS_RA);
+	while (find_place_b(load->b, load->nbr))
+		ps_opr(load, PS_RRB);
+	ps_opr(load, PS_PB);
 	load->func = NULL;
 }
 
-void	apply_rrarrb(int mode, t_load *load)
+void	apply_rrarrb(t_load *load)
 {
-	if (mode)
-	{
-		while (load->b->u_data.i[load->b->size - 1] != load->nbr
-			&& find_place_a(load->a, load->nbr))
-			ps_opr(load, PS_RRR);
-		while (load->b->u_data.i[load->b->size - 1] != load->nbr)
-			ps_opr(load, PS_RRB);
-		while (find_place_a(load->a, load->nbr))
-			ps_opr(load, PS_RRA);
-	}
-	else
-	{
-		while (load->a->u_data.i[load->a->size - 1] != load->nbr
-			&& find_place_b(load->b, load->nbr))
-			ps_opr(load, PS_RRR);
-		while (load->a->u_data.i[load->a->size - 1] != load->nbr)
-			ps_opr(load, PS_RRA);
-		while (find_place_b(load->b, load->nbr))
-			ps_opr(load, PS_RRB);
-	}
-	ps_opr(load, PS_PB + mode);
+	while (load->a->u_data.i[load->a->size - 1] != load->nbr
+		&& find_place_b(load->b, load->nbr))
+		ps_opr(load, PS_RRR);
+	while (load->a->u_data.i[load->a->size - 1] != load->nbr)
+		ps_opr(load, PS_RRA);
+	while (find_place_b(load->b, load->nbr))
+		ps_opr(load, PS_RRB);
+	ps_opr(load, PS_PB);
 	load->func = NULL;
 }

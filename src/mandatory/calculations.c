@@ -12,90 +12,68 @@
 
 #include "../../include/push_swap.h"
 
-t_uint	calc_rarb(int mode, t_load *load)
+t_uint	find_place_b(t_stack *stack, int nbr)
 {
-	t_uint	ret;
-	t_stack	*ptr;
+	t_uint	btw;
+	t_uint	small;
 
-	ret = 0;
-	if (mode == TO_A)
-	{
-		ptr = load->b;
-		if (find_place_a(load->a, load->ptr[load->i]))
-			ret = load->a->size - find_place_a(load->a, load->ptr[load->i]);
-	}
+	if (nbr > stack->u_data.i[stack->size - 1]
+		&& nbr < stack->u_data.i[0])
+		return (0);
+	else if (nbr > stack->u_data.i[biggest(stack)]
+		|| nbr < stack->u_data.i[smallest(stack)])
+		return (smallest(stack));
 	else
 	{
-		ptr = load->a;
-		if (find_place_b(load->b, load->ptr[load->i]))
-			ret = load->b->size - find_place_b(load->b, load->ptr[load->i]);
+		btw = stack->size - 1;
+		while (btw
+			&& !(nbr < stack->u_data.i[btw] && nbr > stack->u_data.i[btw - 1]))
+			--btw;
+		return (btw);
 	}
-	if (load->i != ptr->size - 1
-		&& ret < ptr->size - load->i)
-		return (ptr->size - 1 - load->i);
+}
+
+t_uint	calc_rarb(t_load *load)
+{
+	t_uint	ret;
+
+	ret = 0;
+	if (find_place_b(load->b, load->ptr[load->i]))
+		ret = load->b->size - find_place_b(load->b, load->ptr[load->i]);
+	if (load->i != load->a->size - 1
+		&& ret < load->a->size - load->i)
+		return (load->a->size - 1 - load->i);
 	return (ret);
 }
 
-t_uint	calc_rarrb(int mode, t_load *load)
+t_uint	calc_rarrb(t_load *load)
+{
+	t_uint	ret;
+
+	ret = find_place_b(load->b, load->ptr[load->i]);
+	if (load->i != load->a->size - 1)
+		ret += load->a->size - 1 - load->i;
+	return (ret);
+}
+
+t_uint	calc_rrarb(t_load *load)
 {
 	t_uint	ret;
 
 	ret = 0;
-	if (mode == TO_A)
-	{
-		if (load->i != load->b->size - 1)
-			ret = load->i;
-		if (find_place_a(load->a, load->ptr[load->i]))
-			ret += load->a->size - find_place_a(load->a, load->ptr[load->i]);
-		return (ret);
-	}
-	else
-	{
-		ret = find_place_b(load->b, load->ptr[load->i]);
-		if (load->i != load->a->size - 1)
-			ret += load->a->size - 1 - load->i;
-		return (ret);
-	}
+	if (load->i != load->a->size - 1)
+		ret = load->i;
+	if (find_place_b(load->b, load->ptr[load->i]))
+		ret += load->b->size - find_place_b(load->b, load->ptr[load->i]);
+	return (ret);
 }
 
-t_uint	calc_rrarb(int mode, t_load *load)
+t_uint	calc_rrarrb(t_load *load)
 {
 	t_uint	ret;
 
-	ret = 0;
-	if (mode == TO_A)
-	{
-		ret = find_place_a(load->a, load->ptr[load->i]);
-		if (load->i != load->b->size - 1)
-			ret += load->b->size - 1 - load->i;
-		return (ret);
-	}
-	else
-	{
-		if (load->i != load->a->size - 1)
-			ret = load->i;
-		if (find_place_b(load->b, load->ptr[load->i]))
-			ret += load->b->size - find_place_b(load->b, load->ptr[load->i]);
-		return (ret);
-	}
-}
-
-t_uint	calc_rrarrb(int mode, t_load *load)
-{
-	t_uint	ret;
-	t_stack	*ptr;
-
-	if (mode == TO_A)
-	{
-		ptr = load->b;
-		ret = find_place_a(load->a, load->ptr[load->i]);
-	}
-	else
-	{
-		ptr = load->a;
-		ret = find_place_b(load->b, load->ptr[load->i]);
-	}
-	if (load->i != ptr->size - 1
+	ret = find_place_b(load->b, load->ptr[load->i]);
+	if (load->i != load->a->size - 1
 		&& ret < load->i)
 		ret = load->i;
 	return (ret);

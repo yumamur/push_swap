@@ -12,17 +12,12 @@
 
 #include "../../include/push_swap.h"
 
-int	sort_two(t_load *load)
-{
-	if (load->a->u_data.i[0] < load->a->u_data.i[1])
-		ps_opr(load, PS_SA);
-	return (0);
-}
-
-int	sort_three(t_load *load)
+static int	sort_three(t_load *load)
 {
 	t_uint	small;
 
+	if (load->a->size == 2)
+		return (ps_opr(load, PS_SA));
 	small = smallest(load->a);
 	if (small == 2)
 		return (ps_opr(load, PS_RRA) || ps_opr(load, PS_SA));
@@ -43,17 +38,20 @@ int	sort_three(t_load *load)
 	return (-1);
 }
 
-int	sort_four(t_load *load)
+static int	sort_four(t_load *load)
 {
-	t_uint small;
+	t_uint	small;
 
+	if (load->a->size < 4)
+		return (sort_three(load));
 	small = smallest(load->a);
 	if (small == 3)
 		return (ps_opr(load, PS_RRA) || ps_opr(load, PS_PB) || sort_three(load)
 			|| ps_opr(load, PS_PA));
 	else if (small == 2)
 		return (ps_opr(load, PS_RRA) || ps_opr(load, PS_RRA)
-		|| ps_opr(load, PS_PB) || sort_three(load) || ps_opr(load, PS_PA));
+			|| ps_opr(load, PS_PB) || sort_three(load)
+			|| ps_opr(load, PS_PA));
 	else if (small == 1)
 		return (ps_opr(load, PS_RA) || ps_opr(load, PS_PB) || sort_three(load)
 			|| ps_opr(load, PS_PA));
@@ -65,6 +63,8 @@ int	sort_five(t_load *load)
 {
 	t_uint	small;
 
+	if (load->a->size < 5)
+		return (sort_four(load));
 	small = smallest(load->a);
 	if (small == 4)
 		return (ps_opr(load, PS_PB) || sort_four(load)
@@ -73,11 +73,11 @@ int	sort_five(t_load *load)
 		return (ps_opr(load, PS_RA) || ps_opr(load, PS_PB) || sort_four(load)
 			|| ps_opr(load, PS_PA));
 	else if (small == 2)
-		return (ps_opr(load, PS_RA) || ps_opr(load, PS_RA) || ps_opr(load, PS_PB)
-			|| sort_four(load) || ps_opr(load, PS_PA));
+		return (ps_opr(load, PS_RA) || ps_opr(load, PS_RA)
+			|| ps_opr(load, PS_PB) || sort_four(load) || ps_opr(load, PS_PA));
 	else if (small == 1)
-		return (ps_opr(load, PS_RRA) || ps_opr(load, PS_RRA) || ps_opr(load, PS_PB)
-			|| sort_four(load) || ps_opr(load, PS_PA));
+		return (ps_opr(load, PS_RRA) || ps_opr(load, PS_RRA)
+			|| ps_opr(load, PS_PB) || sort_four(load) || ps_opr(load, PS_PA));
 	else if (small == 0)
 		return (ps_opr(load, PS_RRA) || ps_opr(load, PS_PB) || sort_four(load)
 			|| ps_opr(load, PS_PA));
