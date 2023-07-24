@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com.t  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:42:46 by yumamur           #+#    #+#             */
-/*   Updated: 2023/07/20 18:42:46 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/07/24 18:42:28 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_uint	find_place_b(t_stack *stack, int nbr)
 {
 	t_uint	btw;
-	t_uint	small;
 
 	if (nbr > stack->u_data.i[stack->size - 1]
 		&& nbr < stack->u_data.i[0])
@@ -36,10 +35,12 @@ t_uint	find_place_b(t_stack *stack, int nbr)
 t_uint	calc_rarb(t_load *load)
 {
 	t_uint	ret;
+	t_uint	place;
 
+	place = find_place_b(load->b, load->ptr[load->i]);
 	ret = 0;
-	if (find_place_b(load->b, load->ptr[load->i]))
-		ret = load->b->size - find_place_b(load->b, load->ptr[load->i]);
+	if (place)
+		ret = load->b->size - place;
 	if (load->i != load->a->size - 1
 		&& ret < load->a->size - load->i)
 		return (load->a->size - 1 - load->i);
@@ -59,12 +60,14 @@ t_uint	calc_rarrb(t_load *load)
 t_uint	calc_rrarb(t_load *load)
 {
 	t_uint	ret;
+	t_uint	place;
 
 	ret = 0;
+	place = find_place_b(load->b, load->ptr[load->i]);
 	if (load->i != load->a->size - 1)
 		ret = load->i;
-	if (find_place_b(load->b, load->ptr[load->i]))
-		ret += load->b->size - find_place_b(load->b, load->ptr[load->i]);
+	if (place)
+		ret += load->b->size - place;
 	return (ret);
 }
 

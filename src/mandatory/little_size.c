@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com.t  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:35:37 by yumamur           #+#    #+#             */
-/*   Updated: 2023/07/07 21:40:17 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/07/24 20:55:21 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,21 @@ static int	sort_four(t_load *load)
 	if (load->a->size < 4)
 		return (sort_three(load));
 	small = smallest(load->a);
-	if (small == 3)
-		return (ps_opr(load, PS_RRA) || ps_opr(load, PS_PB) || sort_three(load)
-			|| ps_opr(load, PS_PA));
-	else if (small == 2)
-		return (ps_opr(load, PS_RRA) || ps_opr(load, PS_RRA)
-			|| ps_opr(load, PS_PB) || sort_three(load)
+	if (small == 0)
+		return (ps_opr(load, PS_RRA) || ps_opr(load, PS_PB)
+			|| (!if_sorted(load->a) && sort_three(load))
 			|| ps_opr(load, PS_PA));
 	else if (small == 1)
-		return (ps_opr(load, PS_RA) || ps_opr(load, PS_PB) || sort_three(load)
+		return (ps_opr(load, PS_RRA) || ps_opr(load, PS_RRA)
+			|| ps_opr(load, PS_PB) || (!if_sorted(load->a) && sort_three(load))
+			|| ps_opr(load, PS_PA));
+	else if (small == 2)
+		return (ps_opr(load, PS_RA) || ps_opr(load, PS_PB)
+			|| (!if_sorted(load->a) && sort_three(load))
 			|| ps_opr(load, PS_PA));
 	else
-		return (ps_opr(load, PS_PB) || sort_three(load) || ps_opr(load, PS_PA));
+		return (ps_opr(load, PS_PB) || (!if_sorted(load->a) && sort_three(load))
+			|| ps_opr(load, PS_PA));
 }
 
 int	sort_five(t_load *load)

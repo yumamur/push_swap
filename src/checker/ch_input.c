@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com.t  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:39:48 by yumamur           #+#    #+#             */
-/*   Updated: 2023/07/23 22:39:49 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/07/24 21:44:09 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	load_init(t_ch_load *load, int size)
 {
 	if (!load || !size)
 		handle_error(NO_ARG, NULL);
-	load->a = malloc(sizeof(t_stack) * 2);
+	load->a = malloc(sizeof(t_stack) * 3);
 	if (!load->a)
 		handle_error(MEM_ERROR, NULL);
 	load->b = &load->a[1];
@@ -67,21 +67,34 @@ static void	load_init(t_ch_load *load, int size)
 	}
 }
 
-void	ps_input(char *argv[], int argc, t_ch_load *load)
+static int	count_arg(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+		i++;
+	return (i);
+}
+
+void	ch_input(char *argv[], int argc, t_ch_load *load)
 {
 	int		nbr;
 	t_uint	i;
 	t_c_int	*pt;
+	char	**args;
 
-	if (!argc || argc == 1 || !argv)
+	if (!argc || !argv)
 		handle_error(NO_ARG, NULL);
+	args = argv;
 	if (argc == 1)
-		argv = ft_split(*argv, 32);
+		args = ft_split(*argv, 32);
+	argc = count_arg(args);
 	load_init(load, argc);
 	pt = load->a->u_data.i;
 	while (argc--)
 	{
-		if (argctl(argv[argc], &nbr))
+		if (argctl(args[argc], &nbr))
 			handle_error(INV_ARG, load);
 		i = 0;
 		while (i < load->a->size)

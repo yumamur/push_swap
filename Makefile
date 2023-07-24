@@ -1,4 +1,5 @@
-NAME	= push_swap
+NAME		= push_swap
+NAME_BONUS	= checker
 TITLE	= \033[31;1m[PUSH_SWAP]\033[m
 
 RM		= rm
@@ -24,26 +25,40 @@ $(NAME): $(SRC)
 
 .PHONY: all bonus clean fclean re
 
-all: $(NAME) $(HELP)
+all: $(NAME)
+
+bonus: $(SRC_BONUS)
+	@printf "$(TITLE) \033[1mBonus\033[m\n"
+	@printf "$(TITLE) Building 'libft.a'\n"
+	@make -sC $(LIBFT_DIR)
+	@mkdir -p ./include/libft
+	@cp -r $(LIBFT_HEADERS)/* ./include/libft/
+	@printf "$(TITLE) Building '$(NAME_BONUS)'\n"
+	@$(CC) $(CFLAGS) -I./include $(SRC_BONUS) $(LIBFT) -o $(NAME_BONUS)
+	@printf "$(TITLE) Successful\n"
 
 clean:
-	@if [ -e $(NAME) ]; then \
+	@if [ -e $(NAME)]; then \
 		$(RM) -rf $(NAME); \
-	elif [ -e ./include/libft ]; then \
+	fi \
+	if [ -e $(NAME_BONUS)]; then \
+		$(RM) -rf $(NAME_BONUS); \
+	fi \
+	if [ -e ./include/libft ]; then \
 		$(RM) -rf ./include/libft; \
-	else \
-		continue; \
-	fi
+	fi \
 	@make -sC $(LIBFT_DIR) clean
 
 fclean:
-	@if [ -e $(NAME) ]; then \
+	@if [ -e $(NAME)]; then \
 		$(RM) -rf $(NAME); \
-	elif [ -e ./include/libft ]; then \
+	fi \
+	if [ -e $(NAME_BONUS)]; then \
+		$(RM) -rf $(NAME_BONUS); \
+	fi \
+	if [ -e ./include/libft ]; then \
 		$(RM) -rf ./include/libft; \
-	else \
-		continue; \
-	fi
+	fi \
 	@make -sC $(LIBFT_DIR) fclean
 
 re: fclean all

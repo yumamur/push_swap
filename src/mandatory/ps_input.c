@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com.t  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:28:07 by yumamur           #+#    #+#             */
-/*   Updated: 2023/07/07 01:44:43 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/07/24 20:55:38 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ static int	atol_no_ws(t_c_char *str, long *ptr)
 
 	sign = 1;
 	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		if (str[i++] == '-')
-			sign *= -1;
+	if (str[i] == '-' && ++i)
+		sign *= -1;
+	if (str[i] == 0)
+		return (-1);
 	ret = 0;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
@@ -67,19 +68,34 @@ static void	load_init(t_load *load, int size)
 	}
 }
 
+static int	count_arg(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+		i++;
+	return (i);
+}
+
 void	ps_input(char *argv[], int argc, t_load *load)
 {
 	int		nbr;
 	t_uint	i;
 	t_c_int	*pt;
+	char	**args;
 
-	if (!argc || argc == 1 || !argv)
+	if (!argc || !argv)
 		handle_error(NO_ARG, NULL);
+	args = argv;
+	if (argc == 1)
+		args = ft_split(*argv, 32);
+	argc = count_arg(args);
 	load_init(load, argc);
 	pt = load->a->u_data.i;
 	while (argc--)
 	{
-		if (argctl(argv[argc], &nbr))
+		if (argctl(args[argc], &nbr))
 			handle_error(INV_ARG, load);
 		i = 0;
 		while (i < load->a->size)

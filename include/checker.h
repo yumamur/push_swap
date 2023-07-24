@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   checker.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com.t  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:21:53 by yumamur           #+#    #+#             */
-/*   Updated: 2023/07/06 23:04:59 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/07/24 21:45:57 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ typedef struct s_ch_load
 	t_stack	*b;
 }	t_ch_load;
 
-int		ch_opr(t_ch_load *load, int oprs[]);
 void	handle_error(int errno, t_ch_load *load);
+void	ch_input(char *argv[], int argc, t_ch_load *load);
+int		if_sorted(t_stack *stack);
+int		ch_opr(t_ch_load *load, int oprs[]);
+int		*read_opr(t_ch_load *load);
 
 #endif /* PS_ERRORS */
