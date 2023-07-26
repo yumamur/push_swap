@@ -25,6 +25,5 @@ int	main(int argc, char *argv[])
 		write(1, "OK!\n", 4);
 	else
 		write(1, "KO!\n", 4);
-	free(load.b->u_data.v);
-	ft_stack_destroy(&load.a);
+	free_load(&load);
 }

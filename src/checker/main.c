@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/checker.h"
+#include <stdio.h>
 
 int	main(int argc, char *argv[])
 {
@@ -19,12 +20,17 @@ int	main(int argc, char *argv[])
 
 	ch_input(&argv[1], argc - 1, &load);
 	oprs = read_opr(&load);
+	for (int i = 0; i < 4; i++)
+		printf("oprs[%d] = %d\n", i, oprs[i]);
+	for (int i = 0; i < 4; i++)
+	  printf("%d-> %d\n", i, load.a->u_data.i[i]);
 	ch_opr(&load, oprs);
 	if (if_sorted(load.a))
 		write(1, "OK!\n", 4);
 	else
 		write(1, "KO!\n", 4);
+	for (int i = 0; i < 4; i++)
+	  printf("%d-> %d\n", i, load.a->u_data.i[i]);
 	free(oprs);
-	free(load.b->u_data.v);
-	ft_stack_destroy(&load.a);
+	free_load(&load);
 }

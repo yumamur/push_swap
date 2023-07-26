@@ -52,19 +52,19 @@ static void	load_init(t_load *load, int size)
 {
 	if (!load || !size)
 		handle_error(NO_ARG, NULL);
-	load->a = malloc(sizeof(t_stack) * 2);
+	load->a = ft_calloc(sizeof(t_stack), 2);
 	if (!load->a)
-		handle_error(MEM_ERROR, NULL);
+		handle_error(MALLOC_ERROR, NULL);
 	load->b = &load->a[1];
 	if (ft_stack_init(load->a, size, sizeof(int)))
 	{
 		free(load->a);
-		handle_error(MEM_ERROR, NULL);
+		handle_error(MALLOC_ERROR, NULL);
 	}
 	if (ft_stack_init(load->b, size, sizeof(int)))
 	{
 		ft_stack_destroy(&load->a);
-		handle_error(MEM_ERROR, NULL);
+		handle_error(MALLOC_ERROR, NULL);
 	}
 }
 
@@ -83,19 +83,21 @@ void	ps_input(char *argv[], int argc, t_load *load)
 	int		nbr;
 	t_uint	i;
 	t_c_int	*pt;
-	char	**args;
 
 	if (!argc || !argv)
 		handle_error(NO_ARG, NULL);
-	args = argv;
+	load->args = argv;
 	if (argc == 1)
-		args = ft_split(*argv, 32);
-	argc = count_arg(args);
+	{
+		load->args = ft_split(*argv, 32);
+		load->ctl_args = 1;
+	}
+	argc = count_arg(load->args);
 	load_init(load, argc);
 	pt = load->a->u_data.i;
 	while (argc--)
 	{
-		if (argctl(args[argc], &nbr))
+		if (argctl(load->args[argc], &nbr))
 			handle_error(INV_ARG, load);
 		i = 0;
 		while (i < load->a->size)

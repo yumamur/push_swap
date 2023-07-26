@@ -32,6 +32,7 @@ typedef struct s_ch_load
 	t_stack	*b;
 }	t_ch_load;
 
+void	free_load(t_ch_load *load);
 void	handle_error(int errno, t_ch_load *load);
 void	ch_input(char *argv[], int argc, t_ch_load *load);
 int		if_sorted(t_stack *stack);

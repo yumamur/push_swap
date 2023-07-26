@@ -34,7 +34,8 @@ typedef struct s_load
 {
 	t_stack	*a;
 	t_stack	*b;
-	t_stack	*cur;
+	int		ctl_args;
+	char	**args;
 	t_c_int	*ptr;
 	t_uint	i;
 	t_uint	ctl;
@@ -47,6 +48,7 @@ void	ps_input(char *argv[], int argc, t_load *load);
 int		ps_sort(t_load *load);
 int		ps_opr(t_load *load, int move);
 
+void	free_load(t_load *load);
 void	handle_error(int errno, t_load *load);
 int		if_sorted(t_stack *stack);
 t_uint	find_index(t_stack *stack, int nbr);

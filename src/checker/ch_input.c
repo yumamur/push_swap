@@ -51,20 +51,16 @@ static void	load_init(t_ch_load *load, int size)
 {
 	if (!load || !size)
 		handle_error(NO_ARG, NULL);
-	load->a = malloc(sizeof(t_stack) * 3);
+	load->a = malloc(sizeof(t_stack));
 	if (!load->a)
-		handle_error(MEM_ERROR, NULL);
-	load->b = &load->a[1];
+		handle_error(MALLOC_ERROR, NULL);
 	if (ft_stack_init(load->a, size, sizeof(int)))
-	{
-		free(load->a);
-		handle_error(MEM_ERROR, NULL);
-	}
+		handle_error(MALLOC_ERROR, NULL);
+	load->b = malloc(sizeof(t_stack));
+	if (!load->b)
+		handle_error(MALLOC_ERROR, NULL);
 	if (ft_stack_init(load->b, size, sizeof(int)))
-	{
-		ft_stack_destroy(&load->a);
-		handle_error(MEM_ERROR, NULL);
-	}
+		handle_error(MALLOC_ERROR, NULL);
 }
 
 static int	count_arg(char **args)
